@@ -35,7 +35,7 @@ public class OperationController {
         }
 
         Operation operation = operationService.operationCreate(operationForm);
-        Object result = operationService.calculateExpresstion(operation);
+        Object result = operationService.calculateExpression(operation);
         model.addAttribute("result", result);
         return "/index";
     }

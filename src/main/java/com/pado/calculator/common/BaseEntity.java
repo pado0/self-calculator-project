@@ -1,4 +1,4 @@
-package com.pado.calculator;
+package com.pado.calculator.common;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

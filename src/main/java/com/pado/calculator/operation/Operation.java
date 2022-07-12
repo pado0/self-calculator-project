@@ -1,6 +1,6 @@
 package com.pado.calculator.operation;
 
-import com.pado.calculator.BaseEntity;
+import com.pado.calculator.common.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

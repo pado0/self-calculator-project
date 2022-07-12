@@ -10,7 +10,7 @@ import javax.script.ScriptException;
 @Service
 @RequiredArgsConstructor
 public class OperationService {
-    public Object calculateExpresstion(Operation operation) throws ScriptException {
+    public Object calculateExpression(Operation operation) throws ScriptException {
         String expression = operation.getMathExpression();
 
         ScriptEngineManager manager = new ScriptEngineManager();
