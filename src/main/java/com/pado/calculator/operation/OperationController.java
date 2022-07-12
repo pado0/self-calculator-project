@@ -18,6 +18,9 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 public class OperationController {
+
+    private final OperationService operationService;
+
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("operationForm", new OperationForm());
@@ -31,19 +34,9 @@ public class OperationController {
             return "/index";
         }
 
-        Operation operation = Operation.builder()
-                .mathExpression(operationForm.getMathExpression()).build();
-
-        String expression = operation.getMathExpression();
-
-        ScriptEngineManager manager = new ScriptEngineManager();
-        ScriptEngine engine = manager.getEngineByName("JavaScript");
-
-        Object result = engine.eval(expression);
-
-        System.out.println("result = " + result);
+        Operation operation = operationService.operationCreate(operationForm);
+        Object result = operationService.calculateExpresstion(operation);
         model.addAttribute("result", result);
-
         return "/index";
     }
 }
