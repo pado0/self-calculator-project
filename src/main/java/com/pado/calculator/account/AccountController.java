@@ -23,8 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
 
-    private final AccountRepository accountRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final AccountService accountService;
     private final SignUpFormValidator signUpFormValidator;
 
     @InitBinder("signUpForm")
@@ -47,22 +46,10 @@ public class AccountController {
             return "/sign-up";
         }
 
-        Account account = Account.builder()
-                .email(signUpForm.getEmail())
-                .password(passwordEncoder.encode(signUpForm.getPassword()))
-                .build();
-
-        accountRepository.save(account);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                account.getEmail(),
-                account.getPassword(),
-                List.of(new SimpleGrantedAuthority("ROLE_USER"))
-        );
-
-        SecurityContext context = SecurityContextHolder.getContext();
-        context.setAuthentication(token);
-
+        Account account = accountService.createAccount(signUpForm);
+        accountService.login(account);
         return "redirect:/";
     }
+
 
 }
