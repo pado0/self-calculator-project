@@ -1,6 +1,7 @@
 package com.pado.calculator.account;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/sign-up")
     public String signUpGet(Model model){
@@ -28,7 +30,7 @@ public class AccountController {
 
         Account account = Account.builder()
                 .email(signUpForm.getEmail())
-                .password(signUpForm.getPassword())
+                .password(passwordEncoder.encode(signUpForm.getPassword()))
                 .build();
 
         accountRepository.save(account);
