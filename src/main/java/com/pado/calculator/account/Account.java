@@ -1,12 +1,12 @@
 package com.pado.calculator.account;
 
 import com.pado.calculator.common.BaseEntity;
+import com.pado.calculator.operation.Operation;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -20,4 +20,7 @@ public class Account extends BaseEntity {
     @Column(unique = true)
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "account")
+    private List<Operation> operations = new ArrayList<>();
 }
