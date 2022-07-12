@@ -1,5 +1,7 @@
-package com.pado.calculator;
+package com.pado.calculator.operation;
 
+import com.pado.calculator.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,12 +12,15 @@ import javax.persistence.Lob;
 
 @Entity
 @Getter @Setter
-public class Operation extends BaseEntity{
+@Builder
+public class Operation extends BaseEntity {
 
     @Id
     @GeneratedValue
     private Long id;
 
     @Lob
-    private String operation;
+    private String mathExpression;
+
+    private String result;
 }

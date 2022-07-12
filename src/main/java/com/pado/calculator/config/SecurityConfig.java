@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable() // todo: disable 하지말고 postman에서 토큰 처리하는 법 확인하기
                 .authorizeRequests()
                 // 그냥 허용할 응답들
-                .mvcMatchers("/", "/index", "/login", "/sign-up").permitAll()
+                .mvcMatchers("/", "/index", "/login", "/sign-up", "/operation").permitAll()
                 .anyRequest().authenticated(); // 나머지는 로그인을 해야 쓸 수 있다.
 
         http.formLogin()
