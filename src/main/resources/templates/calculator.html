@@ -4,10 +4,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--계산기 -->
 <body>
+
 <div th:fragment="normal-calculator">
     <div th:if="${mathExpressionErrorMessage != null}">
         <div th:text="${mathExpressionErrorMessage}"></div>
     </div>
+
+    <div th:if="${result != null}">
+        <div th:text="${result}"></div>
+    </div>
+
     <form class="needs-validation col-sm-6" action="#"
           th:action="@{/operation}" th:object="${operationForm}" method="post" novalidate>
 
@@ -56,45 +62,89 @@
         <button class="btn btn-primary btn-block" type="submit"
                 aria-describedby="submitHelp">=</button>
     </form>
+
+    <div th:if="${operations != null}">
+
+        연산 히스토리
+        <tr th:each="operation : ${operations}">
+            <td th:text="${operation.mathExpression}">MathExpression</td>
+            <td th:text="${operation.result}">Result</td>
+        </tr>
+
+    </div>
 </div>
 
 <div th:fragment="scientific-calculator">
-    <table border="1">
-        <div>공학용 계산기입니다</div>
-        <tr>
-            <td class="aa" colspan="4"><input type="text" id="input2" readonly></td>
-        </tr>
-        <tr>
-            <td colspan="4"><input type="text" id="output2" readonly></td>
+    <div> 공학용 계산기입니다. </div>
+    <div th:if="${mathExpressionErrorMessage != null}">
+        <div th:text="${mathExpressionErrorMessage}"></div>
+    </div>
+
+    <div th:if="${result != null}">
+        <div th:text="${result}"></div>
+    </div>
+
+    <form class="needs-validation col-sm-6" action="#"
+          th:action="@{/operation}" th:object="${operationForm}" method="post" novalidate>
+
+        <table border="1">
+            <tr>
+                <td class="aa" colspan="4">
+                    <input id="input" type="text" th:field="*{mathExpression}" class="form-control"
+                           aria-describedby="mathExpressionHelp" required minlength="8" maxlength="50" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"><input type="text" id="output" readonly></td>
+            </tr>
+            <tr>
+                <td onclick="outputclear()">CE</td>
+                <td onclick="allclear()">C</td>
+                <td onclick="tdelete()"><</td>
+                <td onclick="sign('/')">÷</td>
+            </tr>
+            <tr>
+                <td onclick="send(7)">7</td>
+                <td onclick="send(8)">8</td>
+                <td onclick="send(9)">9</td>
+                <td onclick="sign('*')">X</td>
+            </tr>
+            <tr>
+                <td onclick="send(4)">4</td>
+                <td onclick="send(5)">5</td>
+                <td onclick="send(6)">6</td>
+                <td onclick="sign('-')">-</td>
+            </tr>
+            <tr>
+                <td onclick="send(1)">1</td>
+                <td onclick="send(2)">2</td>
+                <td onclick="send(3)">3</td>
+                <td onclick="sign('+')">+</td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td onclick="send(0)">0</td>
+                <td onclick="send('.')">.</td>
+                <td onclick="result()">=</td>
+            </tr>
+
+        </table>
+        <button class="btn btn-primary btn-block" type="submit"
+                aria-describedby="submitHelp">=</button>
+    </form>
+
+    <div th:if="${operations != null}">
+
+        연산 히스토리
+        <tr th:each="operation : ${operations}">
+            <td th:text="${operation.mathExpression}">MathExpression</td>
+            <td th:text="${operation.result}">Result</td>
         </tr>
 
-        <tr>
-            <td onclick="send(7)">7</td>
-            <td onclick="send(8)">8</td>
-            <td onclick="send(9)">9</td>
-            <td onclick="sign('*')">X</td>
-        </tr>
-        <tr>
-            <td onclick="send(4)">4</td>
-            <td onclick="send(5)">5</td>
-            <td onclick="send(6)">6</td>
-            <td onclick="sign('-')">-</td>
-        </tr>
-        <tr>
-            <td onclick="send(1)">1</td>
-            <td onclick="send(2)">2</td>
-            <td onclick="send(3)">3</td>
-            <td onclick="sign('+')">+</td>
-        </tr>
-        <tr>
-            <td> </td>
-            <td onclick="send(0)">0</td>
-            <td onclick="send('.')">.</td>
-            <td onclick="result()">=</td>
-        </tr>
-
-    </table>
+    </div>
 </div>
+
+
 
 </body>
 

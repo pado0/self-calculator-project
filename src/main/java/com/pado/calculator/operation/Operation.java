@@ -2,15 +2,14 @@ package com.pado.calculator.operation;
 
 import com.pado.calculator.account.Account;
 import com.pado.calculator.common.BaseEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
 @Builder
+@NoArgsConstructor @AllArgsConstructor
 public class Operation extends BaseEntity {
 
     @Id
