@@ -25,9 +25,4 @@ public class Operation extends BaseEntity {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    // 연관관계 편의 메소드. operation 추가시 account에도 operation 추가해줌.
-    public void addAccount(Account account) {
-        account.getOperations().add(this);
-    }
-
 }

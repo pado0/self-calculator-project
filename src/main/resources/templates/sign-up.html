@@ -5,6 +5,12 @@
 <body>
 <div th:replace="fragments.html::main-nav"></div>
 
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2> 회원가입 </h2>
+    </div>
+<div class="row justify-content-center" >
 <form class="needs-validation col-sm-6" action="#"
       th:action="@{/sign-up}" th:object="${signUpForm}" method="post" novalidate>
 
@@ -36,5 +42,7 @@
                 aria-describedby="submitHelp">가입하기</button>
     </div>
 </form>
+</div>
+</div>
 </body>
 </html>

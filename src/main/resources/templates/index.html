@@ -7,7 +7,15 @@
 <head th:replace="fragments.html::head">
 </head>
 <body>
-    <div th:replace="fragments.html::main-nav"></div>
-    <div sec:authorize="!isAuthenticated()" th:replace="calculator.html::normal-calculator"></div>
-    <div sec:authorize="isAuthenticated()" th:replace="calculator.html::scientific-calculator"></div>
+<div th:replace="fragments.html::main-nav"></div>
+
+    <div class="container">
+
+
+        <div class="row justify-content-center" >
+
+            <div sec:authorize="!isAuthenticated()" th:replace="calculator.html::normal-calculator"></div>
+        <div sec:authorize="isAuthenticated()" th:replace="calculator.html::scientific-calculator"></div>
+    </div>
+</div>
 </body>

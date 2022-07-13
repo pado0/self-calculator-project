@@ -29,8 +29,14 @@ public class OperationController {
     private final AccountService accountService;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model
+            , @AuthenticationPrincipal UserAccount userAccount) {
         model.addAttribute("operationForm", new OperationForm());
+
+        if (userAccount != null) {
+            model.addAttribute("userAccount", userAccount.getAccount().getId());
+            System.out.println("userAccount.getAccount().getId() = " + userAccount.getAccount().getId());
+        }
         return "/index";
     }
 
@@ -41,7 +47,7 @@ public class OperationController {
                                 Errors errors,
                                 @AuthenticationPrincipal UserAccount userAccount) throws ScriptException {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             return "/index";
         }
 
@@ -51,7 +57,10 @@ public class OperationController {
         operation.setResult(result.toString());
 
         // account 정보가 있으면 회원 별 저장, anony면 null로 저장
-        if(userAccount != null)  accountService.saveUserCheck(operation, userAccount.getUsername());
+        if (userAccount != null) {
+            accountService.saveUserCheck(operation, userAccount.getUsername());
+            model.addAttribute("userAccount", userAccount.getAccount().getId());
+        }
         else accountService.saveWithoutUser(operation);
 
         model.addAttribute("result", result);
@@ -61,27 +70,29 @@ public class OperationController {
     @GetMapping("/operation/history/{accountId}")
     public String getHistoryByJoinedAccount(@PathVariable("accountId") Long accountId,
                                             Model model,
-                                            @AuthenticationPrincipal UserAccount userAccount){
+                                            @AuthenticationPrincipal UserAccount userAccount) {
 
         // 현재 로그인한 사용자 id가 pathvariable과 다르면 조회하지 못하도록 한다.
-        if(userAccount != null && userAccount.getAccount().getId() != accountId) {
+        if (userAccount != null && userAccount.getAccount().getId() != accountId) {
             model.addAttribute("operationForm", new OperationForm());
             /// todo : error 페이지로 연결
             return "error";
         }
 
         List<Operation> operations = operationRepository.findByAccountId(accountId);
+        model.addAttribute("accountId", accountId);
         model.addAttribute("operationForm", new OperationForm());
-        model.addAttribute("operations" , operations);
+        model.addAttribute("operations", operations);
+        model.addAttribute("userAccount", userAccount.getAccount().getId());
 
         return "/index";
     }
 
     @GetMapping("/operation/history")
-    public String getHistoryForAnonymousAccount(Model model){
+    public String getHistoryForAnonymousAccount(Model model) {
         List<Operation> operations = operationRepository.findByAccountId(null);
         model.addAttribute("operationForm", new OperationForm());
-        model.addAttribute("operations" , operations);
+        model.addAttribute("operations", operations);
 
         return "/index";
     }
@@ -89,7 +100,7 @@ public class OperationController {
 
     // todo: 잘못된 수식 잡아주는 exception. 나중에 전역 exception으로 넘기기
     @ExceptionHandler(ScriptException.class)
-    public ModelAndView expressionExceptionCheck(ScriptException  e, HttpServletRequest request){
+    public ModelAndView expressionExceptionCheck(ScriptException e, HttpServletRequest request) {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("operationForm", new OperationForm());
