@@ -59,9 +59,18 @@ public class OperationController {
     }
 
     @GetMapping("/operation/history/{accountId}")
-    public String getHistoryByJoinedAccount(@PathVariable("accountId") Long accountId, Model model){
+    public String getHistoryByJoinedAccount(@PathVariable("accountId") Long accountId,
+                                            Model model,
+                                            @AuthenticationPrincipal UserAccount userAccount){
+
+        // 현재 로그인한 사용자 id가 pathvariable과 다르면 조회하지 못하도록 한다.
+        if(userAccount != null && userAccount.getAccount().getId() != accountId) {
+            model.addAttribute("operationForm", new OperationForm());
+            /// todo : error 페이지로 연결
+            return "error";
+        }
+
         List<Operation> operations = operationRepository.findByAccountId(accountId);
-        System.out.println("operations = " + operations.get(0).getMathExpression());
         model.addAttribute("operationForm", new OperationForm());
         model.addAttribute("operations" , operations);
 

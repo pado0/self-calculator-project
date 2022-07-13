@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.formLogin()
                 .loginPage("/login") // 커스텀 로그인 폼 경로
+                .defaultSuccessUrl("/",true)
                 .permitAll(); // 로그인 폼에 접근할 수 있는 사용자는 전체
 
         http.logout() // 기본적으로 로그아웃이 켜져있다.

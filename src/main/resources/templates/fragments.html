@@ -33,7 +33,9 @@
       var num=1; //몇번째 결과값인지 확인하기 위한 변수
 
       function send(data) {// 버튼을 누르면 데이터를 id ouput에 표시함
-        output.value = output.value + data;
+        //output.value = output.value + data;
+        input.value = input.value+output.value + data;
+        output.value="";
       }
 
       function outputclear(){// output의 데이터를 지움.
