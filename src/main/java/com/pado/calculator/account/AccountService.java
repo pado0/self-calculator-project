@@ -49,18 +49,16 @@ public class AccountService implements UserDetailsService {
     }
 
     @Transactional
-    public void saveUserCheckIfAnony(Operation operation, Object principal) {
-        // 미로그인 유저일 경우 그냥 저장
-        if(principal.equals("anonymousUser")) {
-            operationRepository.save(operation);
-        }else {
-
-            // 로그인 유저일 경우 account에 저장
-            Account account = accountRepository.findByEmail(principal.toString());
-            operation.setAccount(account);
-            //operation.addAccount(account);
-            operationRepository.save(operation);
-        }
+    public void saveUserCheck(Operation operation, String email) {
+        // 로그인 유저일 경우 account에 저장
+        Account account = accountRepository.findByEmail(email);
+        operation.setAccount(account);
+        //operation.addAccount(account);
+        operationRepository.save(operation);
+    }
+    @Transactional
+    public void saveWithoutUser(Operation operation) {
+        operationRepository.save(operation);
     }
 
     @Override

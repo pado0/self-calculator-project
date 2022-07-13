@@ -50,11 +50,9 @@ public class OperationController {
         Object result = operationService.calculateExpression(operation);
         operation.setResult(result.toString());
 
-        // 회원 email context holder에서 읽어오기
-        // Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         // account 정보가 있으면 회원 별 저장, anony면 null로 저장
-        accountService.saveUserCheckIfAnony(operation, userAccount.getUsername());
+        if(userAccount != null)  accountService.saveUserCheck(operation, userAccount.getUsername());
+        else accountService.saveWithoutUser(operation);
 
         model.addAttribute("result", result);
         return "/index"; // todo : 새로고침 이슈 해결을 위해 redirect 하면 addAttribute result가 안됨
