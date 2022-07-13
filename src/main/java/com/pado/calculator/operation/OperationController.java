@@ -3,7 +3,9 @@ package com.pado.calculator.operation;
 import com.pado.calculator.account.Account;
 import com.pado.calculator.account.AccountRepository;
 import com.pado.calculator.account.AccountService;
+import com.pado.calculator.account.UserAccount;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +38,8 @@ public class OperationController {
     @PostMapping("/operation")
     public String operationPost(@Valid @ModelAttribute OperationForm operationForm,
                                 Model model,
-                                Errors errors) throws ScriptException {
+                                Errors errors,
+                                @AuthenticationPrincipal UserAccount userAccount) throws ScriptException {
 
         if(errors.hasErrors()){
             return "/index";
@@ -48,10 +51,10 @@ public class OperationController {
         operation.setResult(result.toString());
 
         // 회원 email context holder에서 읽어오기
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // account 정보가 있으면 회원 별 저장, anony면 null로 저장
-        accountService.saveUserCheckIfAnony(operation, principal);
+        accountService.saveUserCheckIfAnony(operation, userAccount.getUsername());
 
         model.addAttribute("result", result);
         return "/index"; // todo : 새로고침 이슈 해결을 위해 redirect 하면 addAttribute result가 안됨
