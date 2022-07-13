@@ -5,6 +5,9 @@
 <!--계산기 -->
 <body>
 <div th:fragment="normal-calculator">
+    <div th:if="${mathExpressionErrorMessage != null}">
+        <div th:text="${mathExpressionErrorMessage}"></div>
+    </div>
     <form class="needs-validation col-sm-6" action="#"
           th:action="@{/operation}" th:object="${operationForm}" method="post" novalidate>
 
