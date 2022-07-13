@@ -21,6 +21,6 @@ public class Account extends BaseEntity {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "account")
-    private List<Operation> operations = new ArrayList<>();
+//    @OneToMany(mappedBy = "account")
+//    private List<Operation> operations = new ArrayList<>();
 }
