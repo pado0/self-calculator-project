@@ -26,10 +26,9 @@ public class AccountRestController {
     }
 
     @GetMapping("/api/sign-up")
-    public ResponseEntity signUp(@Valid @RequestBody SignUpForm signUpForm){
+    public Result signUp(@Valid @RequestBody SignUpForm signUpForm){
 
         Account account = accountService.createAccount(signUpForm);
-        Result<Account> result = new Result<>(account, "정상 저장");
-        return new ResponseEntity(result, null, HttpStatus.OK);
+        return new Result<>(account, "success");
     }
 }
