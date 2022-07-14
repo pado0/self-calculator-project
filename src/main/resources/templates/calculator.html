@@ -82,11 +82,12 @@
     </div>
 
     <div th:if="${operations != null}">
-
-        <tr th:each="operation : ${operations}">
-            <td th:text="${operation.mathExpression}">MathExpression</td>
-            <td th:text="${operation.result}">Result</td>
-        </tr>
+        <table border="1">
+            <tr th:each="operation : ${operations}">
+                <td th:text="${operation.mathExpression}">MathExpression</td>
+                <td th:text="${operation.result}">Result</td>
+            </tr>
+        </table>
 
     </div>
 </div>
@@ -158,8 +159,7 @@
     <div>
 
         <div class="row justify-content-center">
-            <div>이아래에</div>
-            <div th:text="${userAccount}">Result</div>
+<!--            <div th:text="${userAccount}">Result</div>-->
                 <form class="form-inline my-2 my-lg-0" action="#" th:action="@{/operation/history/{accountId}(accountId = ${userAccount})}" method="get">
                     <button class="dropdown-item" type="submit">계산 히스토리 확인하기</button>
                 </form>
@@ -169,10 +169,12 @@
     </div>
 
     <div th:if="${operations != null}">
-        <tr th:each="operation : ${operations}">
-            <td th:text="${operation.mathExpression}">MathExpression</td>
-            <td th:text="${operation.result}">Result</td>
-        </tr>
+        <table border="1">
+            <tr th:each="operation : ${operations}">
+                <td th:text="${operation.mathExpression}">MathExpression</td>
+                <td th:text="${operation.result}">Result</td>
+            </tr>
+        </table>
 
     </div>
 </div>
