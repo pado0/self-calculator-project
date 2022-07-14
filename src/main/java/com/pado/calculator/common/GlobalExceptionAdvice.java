@@ -28,6 +28,7 @@ public class GlobalExceptionAdvice {
 
         return new ResponseEntity<>(fieldErrors, HttpStatus.BAD_REQUEST);
     }
+}
 
 //    @ExceptionHandler
 //    public ResponseEntity handleConstraintViolationException(
@@ -35,5 +36,4 @@ public class GlobalExceptionAdvice {
 //        // TODO should implement for validation
 //
 //        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//    }
-}
+//    d}
