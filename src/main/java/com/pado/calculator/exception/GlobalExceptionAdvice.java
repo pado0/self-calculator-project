@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
@@ -15,26 +16,35 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
     // validation 디폴트 에러 잡는용.
-    @ExceptionHandler
-    public ResponseEntity handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        final List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
-        List<ErrorResult.FieldError> errors =
-                fieldErrors.stream()
-                        .map(error -> new ErrorResult.FieldError(
-                                error.getField(),
-                                error.getDefaultMessage(),
-                                error.getRejectedValue()
-                        ))
-                        .collect(Collectors.toList());
+//    @ExceptionHandler
+//    public ResponseEntity handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+//        final List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+//        List<ErrorResult.FieldError> errors =
+//                fieldErrors.stream()
+//                        .map(error -> new ErrorResult.FieldError(
+//                                error.getField(),
+//                                error.getDefaultMessage(),
+//                                error.getRejectedValue()
+//                        ))
+//                        .collect(Collectors.toList());
+//
+//        return new ResponseEntity<>(new ErrorResult(errors), HttpStatus.BAD_REQUEST);
+//    }
 
-        return new ResponseEntity<>(new ErrorResult(errors), HttpStatus.BAD_REQUEST);
+    // of 생성 메소드로 코드 간소화
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        final ErrorResult result = ErrorResult.of(e.getBindingResult());
+        return result;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResult handleConstraintViolationException(
+            ConstraintViolationException e) {
+        final ErrorResult result = ErrorResult.of(e.getConstraintViolations());
+
+        return result;
     }
 }
-
-//    @ExceptionHandler
-//    public ResponseEntity handleConstraintViolationException(
-//            ConstraintViolationException e) {
-//        // TODO should implement for validation
-//
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//    d}
