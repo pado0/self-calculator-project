@@ -51,7 +51,9 @@ public class GlobalExceptionAdvice {
     // 중복 로그인에 대한 사용자정의 오류
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleAccountCannotCreateException(AccountCannotCreateException e){
-        return "error";
+    public ResponseEntity handleAccountCannotCreateException(AccountCannotCreateException e){
+
+        ErrorResult.CommonError error = new ErrorResult.CommonError(e.getExceptionCode().getStatus(), e.getExceptionCode().getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }

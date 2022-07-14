@@ -21,12 +21,6 @@ public class AccountRestController {
     private final AccountService accountService;
     private final AccountRepository accountRepository;
 
-//    @ExceptionHandler
-//    public ResponseEntity handleException(AccountCannotCreateException e){
-//        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//    }
-
-
     @GetMapping("/api/test")
     public ResponseEntity test(){
         return new ResponseEntity(HttpStatus.OK);

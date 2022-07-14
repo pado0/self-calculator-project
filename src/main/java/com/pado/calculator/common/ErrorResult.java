@@ -83,4 +83,15 @@ public class ErrorResult {
         }
 
     }
+
+    @Getter
+    public static class CommonError{
+        private int status;
+        private String message;
+
+        public CommonError(int status, String message) {
+            this.status = status;
+            this.message = message;
+        }
+    }
 }
