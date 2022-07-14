@@ -6,6 +6,7 @@ import com.pado.calculator.account.AccountService;
 import com.pado.calculator.account.SignUpForm;
 import com.pado.calculator.common.Result;
 import com.pado.calculator.exception.AccountCannotCreateException;
+import com.pado.calculator.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class AccountRestController {
 
         // todo : 비즈니스 로직에 의한 예외사항 발생, 서비스 레이어로 내리기. Exception은 글로벌에서 처리
         if(accountRepository.existsByEmail(signUpForm.getEmail()))
-            throw new AccountCannotCreateException("이미 존재하는 회원입니다");
+            throw new AccountCannotCreateException(ExceptionCode.MEMBER_DUPLICATE);
 
         Account account = accountService.createAccount(signUpForm);
 

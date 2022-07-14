@@ -1,8 +1,14 @@
 package com.pado.calculator.exception;
 
+import lombok.Getter;
+
 public class AccountCannotCreateException extends RuntimeException{
 
-    public AccountCannotCreateException(String message) {
-        super(message);
+    @Getter
+    private ExceptionCode exceptionCode;
+
+    public AccountCannotCreateException(ExceptionCode exceptionCode) {
+        super(exceptionCode.getMessage());
+        this.exceptionCode = exceptionCode;
     }
 }
