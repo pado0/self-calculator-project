@@ -26,31 +26,31 @@ class AccountControllerTest {
     @Autowired
     private AccountRepository accountRepository;
 
-    @Test
-    void 회원_가입_성공() throws Exception {
-        mockMvc.perform(post("/sign-up")
-                        .param("email", "gywls1743@naver.com")
-                        .param("password", "asdfqwer")
-                        .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"))
-                .andExpect(authenticated().withUsername("gywls1743@naver.com")); // UsernamePasswordAuthToken 구현 후 동작.
-
-        Account account = accountRepository.findByEmail("gywls1743@naver.com");
-        assertNotNull(account);
-        assertNotEquals(account.getPassword(), "asdfqwer");
-
-    }
-    @Test
-    void 회원_가입_입력값오류() throws Exception {
-        mockMvc.perform(post("/sign-up")
-                        .param("email", "gywls174xxx")
-                        .param("password", "asdfq")
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/sign-up"))
-                .andExpect(unauthenticated()); // UsernamePasswordAuthToken 구현 후 동작.
-
-    }
+//    @Test
+//    void 회원_가입_성공() throws Exception {
+//        mockMvc.perform(post("/sign-up")
+//                        .param("email", "gywls1743@naver.com")
+//                        .param("password", "asdfqwer")
+//                        .with(csrf()))
+//                .andExpect(status().is3xxRedirection())
+//                .andExpect(view().name("redirect:/"))
+//                .andExpect(authenticated().withUsername("gywls1743@naver.com")); // UsernamePasswordAuthToken 구현 후 동작.
+//
+//        Account account = accountRepository.findByEmail("gywls1743@naver.com");
+//        assertNotNull(account);
+//        assertNotEquals(account.getPassword(), "asdfqwer");
+//
+//    }
+//    @Test
+//    void 회원_가입_입력값오류() throws Exception {
+//        mockMvc.perform(post("/sign-up")
+//                        .param("email", "gywls174xxx")
+//                        .param("password", "asdfq")
+//                        .with(csrf()))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("/sign-up"))
+//                .andExpect(unauthenticated()); // UsernamePasswordAuthToken 구현 후 동작.
+//
+//    }
 
 }
