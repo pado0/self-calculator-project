@@ -1,5 +1,6 @@
-package com.pado.calculator.common;
+package com.pado.calculator.exception;
 
+import com.pado.calculator.common.ErrorResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionAdvice {
     // validation 디폴트 에러 잡는용.
     @ExceptionHandler
-    public ResponseEntity handleException(MethodArgumentNotValidException e) {
+    public ResponseEntity handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         final List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         List<ErrorResult.FieldError> errors =
                 fieldErrors.stream()
@@ -26,7 +27,7 @@ public class GlobalExceptionAdvice {
                         ))
                         .collect(Collectors.toList());
 
-        return new ResponseEntity<>(fieldErrors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ErrorResult(errors), HttpStatus.BAD_REQUEST);
     }
 }
 

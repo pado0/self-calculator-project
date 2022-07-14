@@ -1,4 +1,4 @@
-package com.pado.calculator.api;
+package com.pado.calculator.exception;
 
 public class AccountCannotCreateException extends RuntimeException{
 

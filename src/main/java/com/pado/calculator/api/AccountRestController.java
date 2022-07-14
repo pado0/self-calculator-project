@@ -4,18 +4,14 @@ import com.pado.calculator.account.Account;
 import com.pado.calculator.account.AccountRepository;
 import com.pado.calculator.account.AccountService;
 import com.pado.calculator.account.SignUpForm;
-import com.pado.calculator.common.ErrorResult;
 import com.pado.calculator.common.Result;
+import com.pado.calculator.exception.AccountCannotCreateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
