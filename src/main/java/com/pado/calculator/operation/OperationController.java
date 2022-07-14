@@ -5,6 +5,9 @@ import com.pado.calculator.account.AccountRepository;
 import com.pado.calculator.account.AccountService;
 import com.pado.calculator.account.UserAccount;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -91,6 +96,7 @@ public class OperationController {
     @GetMapping("/operation/history")
     public String getHistoryForAnonymousAccount(Model model) {
         List<Operation> operations = operationRepository.findByAccountId(null);
+
         model.addAttribute("operationForm", new OperationForm());
         model.addAttribute("operations", operations);
 
