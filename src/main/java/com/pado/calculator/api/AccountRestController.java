@@ -34,12 +34,15 @@ public class AccountRestController {
     @PostMapping("/api/sign-up")
     public Result<Account> signUp(@Valid @RequestBody SignUpForm signUpForm){
 
-        // todo : Result 부분 생성자로 리팩토링. 지네릭 다시공부하기
+
+        // todo : 비즈니스 로직에 의한 예외사항 발생, 서비스 레이어로 내리기. Exception은 글로벌에서 처리
         if(accountRepository.existsByEmail(signUpForm.getEmail()))
             throw new AccountCannotCreateException("이미 존재하는 회원입니다");
 
         Account account = accountService.createAccount(signUpForm);
 
+        // todo : Result 부분 생성자로 리팩토링. 지네릭 다시공부하기
+        // urclass exception errorresult 부분 참고하기
         Result<Account> result = Result.<Account>builder()
                 .status(HttpStatus.OK)
                 .message("정상응답")
