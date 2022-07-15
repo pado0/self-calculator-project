@@ -42,7 +42,7 @@ public class OperationController {
             model.addAttribute("userAccount", userAccount.getAccount().getId());
             System.out.println("userAccount.getAccount().getId() = " + userAccount.getAccount().getId());
         }
-        return "/index";
+        return "index";
     }
 
 
@@ -53,7 +53,7 @@ public class OperationController {
                                 @AuthenticationPrincipal UserAccount userAccount) throws ScriptException {
 
         if (errors.hasErrors()) {
-            return "/index";
+            return "index";
         }
 
         // 오퍼레이션 폼 변경 및 결과 연산
@@ -69,7 +69,7 @@ public class OperationController {
         else accountService.saveWithoutUser(operation);
 
         model.addAttribute("result", result);
-        return "/index"; // todo : 새로고침 이슈 해결을 위해 redirect 하면 addAttribute result가 안됨
+        return "index"; // todo : 새로고침 이슈 해결을 위해 redirect 하면 addAttribute result가 안됨
     }
 
     @GetMapping("/operation/history/{accountId}")
@@ -90,7 +90,7 @@ public class OperationController {
         model.addAttribute("operations", operations);
         model.addAttribute("userAccount", userAccount.getAccount().getId());
 
-        return "/index";
+        return "index";
     }
 
     @GetMapping("/operation/history")
@@ -100,7 +100,7 @@ public class OperationController {
         model.addAttribute("operationForm", new OperationForm());
         model.addAttribute("operations", operations);
 
-        return "/index";
+        return "index";
     }
 
 
