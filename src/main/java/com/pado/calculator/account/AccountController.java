@@ -36,14 +36,14 @@ public class AccountController {
 
         model.addAttribute("signUpForm", new SignUpForm());
 
-        return "/sign-up";
+        return "sign-up";
     }
 
     @PostMapping("/sign-up")
     public String signUpPost(@Valid @ModelAttribute SignUpForm signUpForm, Errors errors) {
 
         if(errors.hasErrors()){
-            return "/sign-up";
+            return "sign-up";
         }
 
         Account account = accountService.createAccount(signUpForm);
